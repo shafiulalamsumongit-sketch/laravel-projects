@@ -1,0 +1,4 @@
+https://chatgpt.com/c/69214d1c-75f0-8320-85e7-279d94ca3070
+
+
+php artisan make:migration add_subscription_type_to_admins_table --table=tasks
