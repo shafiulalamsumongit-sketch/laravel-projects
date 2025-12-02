@@ -1,0 +1,19 @@
+
+
+https://chatgpt.com/c/692c47e4-c318-8320-b949-6313b23d52c6
+
+POST /api/register
+
+POST /api/login
+
+POST /api/logout
+
+GET /api/products
+
+POST /api/products
+
+GET /api/products/{id}
+
+PUT /api/products/{id}
+
+DELETE /api/products/{id}
