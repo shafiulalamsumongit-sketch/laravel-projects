@@ -1,7 +1,0 @@
-https://www.itsolutionstuff.com/post/laravel-11-user-roles-and-permissions-tutorialexample.html
-
-
-https://github.com/savanihd/Laravel-11-User-Roles-and-Permissions/tree/main
-
-
-https://www.youtube.com/watch?v=RJfSj-pd33k&list=PLRB0wzP8AS_GfoZTiqsY1397H8LcXgkMZ&index=12

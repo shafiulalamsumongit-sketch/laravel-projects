@@ -1,4 +1,0 @@
-https://chatgpt.com/c/691e96b0-e268-8323-8702-2d1d286ddb93
-
-
-php artisan make:controller Auth/RegisterController
