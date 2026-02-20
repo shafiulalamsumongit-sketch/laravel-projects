@@ -17,4 +17,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+use App\Http\Controllers\TodoController;
+
+
+Route::get('/todos', [TodoController::class, 'index'])
+    ->name('todos.index');
+
+use App\Http\Controllers\UserController;
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
 require __DIR__.'/auth.php';
