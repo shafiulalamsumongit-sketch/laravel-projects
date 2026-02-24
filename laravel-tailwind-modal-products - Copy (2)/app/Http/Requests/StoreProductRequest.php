@@ -18,12 +18,12 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            /* 'name' => 'required|string|min:3|max:255',
+            'name' => 'required|string|min:3|max:255',
             'sku' => 'required|string|unique:products,sku',
             'short_description' => 'nullable|string|max:500',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0', */
+            'stock' => 'required|integer|min:0',
         ];
     }
 
@@ -50,12 +50,12 @@ class StoreProductRequest extends FormRequest
     public function messages(): array
     {
         return [
-            /* 'name.required' => 'Product name is required, please provide.',
+            'name.required' => 'Product name is required, please provide.',
             'sku.required' => 'Product sku is required, please provide.',
             'name.min' => 'Product min is 3 required, please provide.',
             'price.required' => 'Product  Price is required, please provide.',
             'discount_price.lt' => 'Product  Discount price must be less than price',
-            'categories.required' => 'Product  Please select at least one category', */
+            'categories.required' => 'Product  Please select at least one category',
         ];
     }
 }

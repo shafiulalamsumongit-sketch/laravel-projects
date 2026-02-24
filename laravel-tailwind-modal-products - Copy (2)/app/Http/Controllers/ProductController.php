@@ -9,9 +9,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-
-
-
 class ProductController extends Controller
 {
     public function index()
@@ -64,7 +61,7 @@ class ProductController extends Controller
         // $product->categories()->sync([$data['category_id']]);
         //  $categories = explode(',', $request->categories);
 
-      //  $product->categories()->attach($categories);
+        $product->categories()->attach($categories);
         SendProductCreatedMailJob::dispatch($product);
 
         /*

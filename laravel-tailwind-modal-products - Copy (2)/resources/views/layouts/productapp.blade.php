@@ -243,9 +243,8 @@
                 const submit = async () => {
 
                     if (!validateForm()) {
-                      //  console.log('Please fix validation errors');
+                        console.log('Please fix validation errors');
                         //success()  //return
-                       // return
                     }
 
                     loading.value = true
