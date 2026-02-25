@@ -1,40 +1,40 @@
 @extends('layouts.productapp')
-
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/products.css') }}">
 @endpush
-
 @push('js_links')
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 @endpush
-
-
-
 @section('content')
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Product Management : https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144</h1>
-    </div>
     <div class="max-w-7xl mx-auto mt-1 ">
         <div class="mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    Suggest Features <a target='_blank'
-                        href='https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144'>https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144</a>
+                    <a class='text-blue-600 md:text-green-600 underline hover:decoration-pink-500' target='_blank'
+                        href='https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144'>Product Management</a><br />
+                    <a class='text-blue-600 md:text-green-600 decoration-black  underline hover:decoration-pink-500' target='_blank'
+                        href='https://chatgpt.com/c/6997e981-0ce0-8324-a2cc-bea9231f7d6b'>Gmail Send</a><br />
+                    <a class='text-blue-600 md:text-green-600  underline hover:decoration-pink-500' target='_blank'
+                        href='https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144'>Suggest Features</a><br />
+
+                    <a class='text-blue-600 md:text-green-600  underline hover:decoration-pink-500'target='_blank'
+                        href='https://chatgpt.com/c/69887317-2164-8321-a3c1-419e2ab520f3'>Inventory</a><br />
+
+                    <a class='text-blue-600 md:text-green-600 underline hover:decoration-pink-500' target='_blank'
+                        href='https://chatgpt.com/c/69777f21-f7b4-8323-981e-974aa1246a5e'>Product Create</a><br />
+
+
+                         <a class='text-blue-600 md:text-green-600 underline hover:decoration-pink-500' target='_blank'
+                        href='https://chatgpt.com/c/697c30d0-c5bc-8320-9f23-45b117441144'>Product Create 2 </a><br />
+
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-1 ">
-        <div class="mx-auto">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    Inventory : <a target='_blank'
-                        href='https://chatgpt.com/c/69887317-2164-8321-a3c1-419e2ab520f3'>https://chatgpt.com/c/69887317-2164-8321-a3c1-419e2ab520f3</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
     <div class="max-w-7xl mx-auto mt-1 ">
         <div class="mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -45,8 +45,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="max-w-7xl mx-auto mt-1 ">
         <div class="mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -61,17 +59,15 @@
                     Worker processes job instantly<br />
                     ↓<br />
                     Mail sent to admin@gmail.com<br />
-                   
+
                 </div>
             </div>
         </div>
     </div>
-
     <!-- TOASTER -->
     <div v-if="toast" class="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded">
         @{{ toast }}
     </div>
-
     <!-- CREATE BUTTON -->
     <div class="flow-root  mt-2">
         <p class="float-left">Products</p>
@@ -83,7 +79,6 @@
     <!-- component -->
     <!-- This is an example component -->
     <div class="max-w-2xl mx-auto bg-white p-16">
-
         <form>
             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
@@ -202,20 +197,18 @@
                         <p class="text-red-500 text-sm" v-if="errors.sku">@{{ errors.sku }}</p>
                     </div>
                     <div>
-                        <select multiple v-model="selectedOptions"
+                        <select multiple v-model="form.categories"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  w-full border rounded p-2 mb-1">
                             <option value="">Select Category</option>
                             <option v-for="c in categoriesList" :value="c.id">@{{ c.cat_name }}</option>
                         </select>
-                        <p class="text-red-500 text-sm" v-if="errors.selectedOptions">@{{ errors.selectedOptions }}</p>
+                        <p class="text-red-500 text-sm" v-if="errors.categories">@{{ errors.categories }}</p>
                     </div>
                     <div>
                         <input v-model="form.slug" placeholder="Slug"
                             class="input bg-gray-50 border border-gray-300 text-gray-900 text-sm ">
                         <p class="text-red-500 text-sm" v-if="errors.slug">@{{ errors.slug }}</p>
                     </div>
-
-
                     <div>
                         <input v-model="form.price" type="number" placeholder="Price"
                             class="input bg-gray-50 border border-gray-300 text-gray-900 text-sm ">
@@ -253,7 +246,6 @@
                             class="input bg-gray-50 border border-gray-300 text-gray-900 text-sm ">
                         <p class="text-red-500 text-sm" v-if="errors.publish_date">@{{ errors.publish_date }}</p>
                     </div>
-
                     <div>
                         <label class="font-semibold">Weight</label>
                         <input v-model="form.weight" placeholder="Weight"
@@ -266,8 +258,6 @@
                             class="input bg-gray-50 border border-gray-300 text-gray-900 text-sm ">
                         <p class="text-red-500 text-sm" v-if="errors.dimensions">@{{ errors.dimensions }}</p>
                     </div>
-
-
                     <!-- MAIN IMAGE -->
                     <div class="col-span-2">
                         <h3 class="section-title">Main Image</h3>
@@ -287,8 +277,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <!-- GALLERY -->
                     <div class="col-span-2">
                         <h3 class="section-title">Gallery Images</h3>
@@ -316,33 +304,24 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="col-span-2">
                         <label class="font-semibold">SEO Description</label>
-                        <textarea v-model="form.seo_desc" placeholder="SEO Description"
+                        <textarea v-model="form.seo_description" placeholder="SEO Description"
                             class="input col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm "></textarea>
-                        <p class="text-red-500 text-sm" v-if="errors.seo_desc">@{{ errors.seo_desc }}</p>
+                        <p class="text-red-500 text-sm" v-if="errors.seo_description">@{{ errors.seo_description }}</p>
                     </div>
-
-
                     <div class="col-span-2">
                         <label class="font-semibold">Short Description</label>
-                        <input v-model="form.short_desc" placeholder="Short description"
+                        <input v-model="form.short_description" placeholder="Short description"
                             class="input col-span-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm ">
-                        <p class="text-red-500 text-sm" v-if="errors.short_desc">@{{ errors.short_desc }}</p>
+                        <p class="text-red-500 text-sm" v-if="errors.short_description">@{{ errors.short_description }}</p>
                     </div>
-
                     <div class="col-span-2">
                         <label class="font-semibold">Full Description</label>
                         <div id="editor" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm "></div>
                         <p class="text-red-500 text-sm" v-if="errors.full_desc">@{{ errors.full_desc }}</p>
                     </div>
                     <!-- SUBMIT -->
-
-
-
-
                     <div class="bg-gray-100 p-4 rounded-lg">
                         <div class="flex gap-4">
                             <button class="submit bg-red-600 text-white px-4 py-2 rounded" type="button"
@@ -352,8 +331,6 @@
                             </button>
                         </div>
                     </div>
-
-
             </form>
         </div>
     </div>

@@ -30,6 +30,10 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen">
+
+
+
+
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
         <!-- Page Heading -->
@@ -47,6 +51,19 @@
             </div>
         </main>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script type="module">
         import {
             createApp,
@@ -82,11 +99,11 @@
                         errors.name = 'Name required';
                     }
                     if (!form.sku.trim()) setError('sku', 'SKU required');
-                    if (!form.short_desc.trim()) setError('short_desc', 'Short description required')
+                    if (!form.short_description.trim()) setError('short_description', 'Short description required')
                     const desc = quill?.root?.innerText.trim()
                     if (!desc) {
-                        setError('full_desc', 'Description required')
-                        errors.full_desc = 'Name required';
+                        setError('description', 'Description required')
+                        errors.description = 'description required';
                     }
                     if (!form.price || form.price <= 0) setError('price', 'Valid price required')
                     if (form.discount_price && Number(form.discount_price) >= Number(form.price))
@@ -95,15 +112,15 @@
                     if (!form.slug.trim()) setError('slug', 'Slug required')
                     if (form.seo_title.length == 0) setError('seo_title', 'SEO title required')
                     if (form.seo_title.length > 120) setError('seo_title', 'SEO title too long')
-                    if (form.seo_desc.length == 0) setError('seo_desc', 'SEO seo_desc required')
-                    if (form.seo_desc.length > 200) setError('seo_desc', 'SEO description too long')
+                    if (form.seo_description.length == 0) setError('seo_description', 'SEO seo_desc required')
+                    if (form.seo_description.length > 200) setError('seo_description', 'SEO description too long')
                     if (form.weight === '' || form.weight < 0) setError('weight', 'Invalid weight')
                     if (form.weight && form.weight < 0) setError('weight', 'Invalid weight')
                     if (form.dimensions === '' || form.dimensions < 0) setError('dimensions',
                         'Invalid dimensions')
                     if (form.dimensions && form.dimensions < 0) setError('dimensions', 'Invalid dimensions')
                     if (!form.publish_date) setError('publish_date', 'Publish date required')
-                    if (selectedOptions.value.length === 0) errors.selectedOptions = 'Category required'
+                    if (!form.category_ids) errors.category_ids = 'Category required'; //Category
                     if (!mainPreview.value) setError('main_image', 'Main image required');
                     if (galleryPreview.length === 0)
                         setError('gallery', 'Add at least one gallery image')
@@ -136,7 +153,8 @@
                     subPreviews.value.splice(index, 1)
                 }
                 const selectedOptions = ref([]);
-                const openModal = () => showModal.value = true;
+                let quill;
+                const openModal = () => { showModal.value = true; }
 
                 const form = reactive({
                     main_image: null,
@@ -144,15 +162,15 @@
                     categories: [],
                     name: '',
                     sku: '',
-                    short_desc: '',
-                    full_desc: '',
+                    short_description: '',
+                    description: '',
                     price: '',
                     discount_price: '',
                     stock: '',
                     status: 'active',
                     slug: '',
                     seo_title: '',
-                    seo_desc: '',
+                    seo_description: '',
                     weight: '',
                     dimensions: '',
                     publish_date: '',
@@ -163,7 +181,7 @@
                 const submitsss = async () => {
                     if (!validate()) return
                     const formData = new FormData()
-                    formData.append('categories', selectedOptions.value)
+                    formData.append('categories', form.categories)
                     formData.append('name', form.name)
                     formData.append('sku', form.sku)
                     formData.append('price', form.price)
@@ -191,7 +209,7 @@
 
                 }
 
-                let quill
+                
                 const slugify = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-')
                 const autoSlug = () => form.slug = slugify(form.name)
                 const generateSKU = () => form.sku = 'SKU-' + Math.random().toString(36).substring(2, 8)
@@ -243,15 +261,21 @@
                 const submit = async () => {
 
                     if (!validateForm()) {
-                      //  console.log('Please fix validation errors');
+                        console.log('Please fix validation errors');
                         //success()  //return
                        // return
                     }
 
                     loading.value = true
-                    form.full_desc = quill.root.innerHTML;
+                    form.description = quill.root.innerHTML;
                     const formData = new FormData()
-                    Object.entries(form).forEach(([k, v]) => formData.append(k, v))
+                    Object.entries(form).forEach(([k, v]) => formData.append(k, v));
+                     //formData.append('categories', selectedOptions.value);//categories
+
+console.log(form.categories);
+formData.append('categories', form.categories)
+//formData.append('categories', selectedOptions.value)
+
                     if (form.main) formData.append('main_image', form.main);
                     galleryPreview.forEach((g, i) => {
                         formData.append('gallery[]', g.file)

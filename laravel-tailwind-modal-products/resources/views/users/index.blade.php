@@ -1,4 +1,4 @@
-@extends('layouts.apptailwind')
+@extends('layouts.apptailwind-user')
 
 @section('content')
 <div id="app" v-cloak class=' mx-auto mt-10  pb-10'>
