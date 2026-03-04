@@ -34,7 +34,11 @@ Route::post('/users/store', [UserController::class, 'store']);
 Route::get('/users/{id}/edit', [UserController::class, 'edit']);
 Route::post('/users/{id}/update', [UserController::class, 'update']);
 Route::delete('/users/{id}/delete', [UserController::class, 'destroy']);
+
+
+
 Route::get('/products', [ProductController::class, 'index'])->name('products-index');
+
 Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::get('/login-manual', [LoginController::class, 'show'])->name('login-manual');
@@ -48,6 +52,7 @@ Route::post('login', [LoginController::class, 'login']);
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Login
@@ -71,19 +76,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-/**
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth:admin','role:super_admin'])
     ->group(function () {
         Route::resource('admins', AdminController::class);
-});
-**/
-Route::prefix('admin')
-    ->name('admin.')
-    ->middleware(['auth:admin','role:super_admin'])
-    ->group(function () {
-        Route::resource('admins', AdminController::class);
+        Route::resource('roles', RoleController::class);
 });
 
 

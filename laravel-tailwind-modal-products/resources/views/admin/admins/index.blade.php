@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Admin Dashboard') }} Role : {{ auth('admin')->user()->getRoleNames()->first() }}
+            {{ __('Admin Dashboard Role : ') }} {{ auth('admin')->user()->getRoleNames()->first() }}
         </h2>
     </x-slot>
-    <div class="p-6">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-4">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold">Admin Users</h1>
             <a href="{{ route('admin.admins.create') }}"
