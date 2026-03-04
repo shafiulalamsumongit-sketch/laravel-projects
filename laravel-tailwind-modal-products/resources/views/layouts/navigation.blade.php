@@ -10,37 +10,35 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Admin Dashboard -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Users Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('users-index')" :active="request()->routeIs('users-index')">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                         {{ __('Users') }}
                     </x-nav-link>
                 </div>
 
-
-                <!-- Navigation Links -->
+                <!-- Products Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('products-index')" :active="request()->routeIs('products-index')">
+                    <x-nav-link :href="route('admin.products-index')" :active="request()->routeIs('admin.products-index')">
                         {{ __(key: 'Products') }}
                     </x-nav-link>
                 </div>
 
-
-                <!-- Navigation Links -->
+                <!-- Admins Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.admins.index')" :active="request()->routeIs('admin.admins.index')">
                         {{ __(key: 'Admin Users') }}
                     </x-nav-link>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Roles Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')">
                         {{ __(key: 'Roles') }}
@@ -56,7 +54,7 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>trigger {{ auth()->user()->name ?? 'Guest' }}</div>
+                            <div>trigger {{ auth()->user()->name }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"

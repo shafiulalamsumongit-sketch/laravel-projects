@@ -43,33 +43,33 @@
                     Dashboard
                 </a>
                 {{-- Users --}}
-                <a href="{{ route('users-index') }}"
+                <a href="{{ route('admin.users.index') }}"
                     class="flex items-center px-4 py-2 rounded-lg
-           {{ request()->routeIs('users.*') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
+           {{ request()->routeIs('admin.users.index') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M17 20h5v-2a4 4 0 0 0-4-4h-1" />
                         <circle cx="9" cy="7" r="4" />
                     </svg>
-                    Users
+                    Users 222
                 </a>
 
                 {{-- Products --}}
-                <a href="{{ route('users-index') }}"
+                <a href="{{ route('admin.users.index') }}"
                     class="flex items-center px-4 py-2 rounded-lg
-           {{ request()->routeIs('products.*') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
+           {{ request()->routeIs('admin.users.index') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M20 7H4M20 7l-1 12H5L4 7m4 0V4h8v3" />
                     </svg>
-                    Products
+                    Products 222
                 </a>
                 {{-- Settings --}}
-                <a href="{{ route('users-index') }}"
+                <a href="{{ route('admin.users.index') }}"
                     class="flex items-center px-4 py-2 rounded-lg
-           {{ request()->routeIs('users-index') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
+           {{ request()->routeIs('admin.users.index') ? 'bg-indigo-100 text-indigo-600' : 'hover:bg-gray-100' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z" />
                     </svg>
-                    Settings
+                    Settings 222
                 </a>
             </nav>
             {{-- Footer --}}
@@ -82,7 +82,7 @@
             <!-- Top Navbar -->
             <header class="h-16 bg-white border-b flex items-center  justify-between px-6">
                 <!-- Left -->
-                @include('layouts.navigation-custom-1')
+                @include('layouts.navigation')
                 <!-- Right -->
                 <div class="relative">
                 </div>

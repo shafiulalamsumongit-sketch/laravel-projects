@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
+// use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
-use App\Http\Controllers\UserController;
+// use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,17 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 Route::get('/todos', [TodoController::class, 'index'])->name('todos.index');
-Route::get('/users', [UserController::class, 'index'])->name('users-index');
-Route::get('/users/list', [UserController::class, 'list']);
-Route::post('/users/store', [UserController::class, 'store']);
-Route::get('/users/{id}/edit', [UserController::class, 'edit']);
-Route::post('/users/{id}/update', [UserController::class, 'update']);
-Route::delete('/users/{id}/delete', [UserController::class, 'destroy']);
+//Route::get('/users', [UserController::class, 'index'])->name('users-index');
 
-
-
-Route::get('/products', [ProductController::class, 'index'])->name('products-index');
+// Route::get('/products', [ProductController::class, 'index'])->name('products-index');
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
@@ -52,7 +47,9 @@ Route::post('login', [LoginController::class, 'login']);
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Login
@@ -62,30 +59,35 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
     // Protected routes
     Route::middleware('auth:admin')->group(function () {
-        // Route::get('/dashboard', function () {
-        //      return view('admin.dashboard');
-        //  })->name('dashboard');
+        // Route::get('/dashboard', function () { return view('admin.dashboard'); })->name('dashboard');
         Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-        // / Route::middleware('role:super_admin|admin')->group(function () {
-        // Route::resource('products', ProductController::class);
-        // });
+
+        /* Route::get('/users/list', [UserController::class, 'list']);
+        Route::post('/users/store', [UserController::class, 'store']);
+        Route::get('/users/{id}/edit', [UserController::class, 'edit']);
+        Route::post('/users/{id}/update', [UserController::class, 'update']);
+        Route::delete('/users/{id}/delete', [UserController::class, 'destroy']); */
+
+        Route::resource('users', UserController::class);
     });
+
     // Route::middleware(['auth:admin', 'role:super_admin'])->group(function () {
     // Only super admin routes
     // });
 });
 
-
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth:admin','role:super_admin'])
+    ->middleware(['auth:admin', 'role:super_admin'])
     ->group(function () {
         Route::resource('admins', AdminController::class);
         Route::resource('roles', RoleController::class);
-});
-
+        // Route::resource('products', ProductController::class);
+        Route::get('/products', [ProductController::class, 'index'])->name('products-index');
+    });
 
 use App\Http\Controllers\Vendor\Auth\VendorLoginController;
+
 Route::prefix('vendor')->name('vendor.')->group(function () {
     Route::get('/login', [VendorLoginController::class, 'showLoginForm'])
         ->name('login');
