@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Sidebar</title>
+
+<style>
+:root{
+  --dark:#0f172a;
+  --primary:#3b82f6;
+  --light:#f1f5f9;
+  --white:#fff;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  background:var(--light);
+}
+
+/* Layout */
+.wrapper{
+  display:flex;
+  min-height:100vh;
+}
+
+/* Sidebar */
+nav{
+  width:260px;
+  background:var(--dark);
+  color:white;
+  padding:20px;
+  transition:0.3s;
+  position:fixed;
+  height:100%;
+  left:0;
+  top:0;
+}
+
+nav h2{
+  margin-bottom:20px;
+}
+
+nav a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:10px 0;
+}
+
+nav a:hover{
+  color:var(--primary);
+}
+
+details summary{
+  cursor:pointer;
+  padding:10px 0;
+}
+
+/* Content */
+.content{
+  flex:1;
+  margin-left:260px;
+  transition:0.3s;
+}
+
+/* Header */
+header{
+  background:var(--white);
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 2px 5px rgba(0,0,0,.05);
+}
+
+.menu-btn{
+  font-size:22px;
+  cursor:pointer;
+  display:none;
+}
+
+/* Main */
+main{
+  padding:25px;
+}
+
+/* Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+}
+
+/* ===== Tablet ===== */
+@media(max-width:992px){
+
+  nav{
+    width:70px;
+  }
+
+  nav h2,
+  nav a span{
+    display:none;
+  }
+
+  .content{
+    margin-left:70px;
+  }
+}
+
+/* ===== Mobile ===== */
+@media(max-width:768px){
+
+  nav{
+    left:-260px;
+  }
+
+  nav.active{
+    left:0;
+  }
+
+  .content{
+    margin-left:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .overlay.active{
+    display:block;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <h2>Inventory</h2>
+
+  <a href="#"><span>Dashboard</span></a>
+
+  <details>
+    <summary><span>Products</span></summary>
+    <a href="#"><span>All Products</span></a>
+    <a href="#"><span>Add Product</span></a>
+  </details>
+
+  <a href="#"><span>Orders</span></a>
+  <a href="#"><span>Reports</span></a>
+</nav>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Content -->
+<div class="content">
+
+<header>
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <h1>Responsive Sidebar Layout</h1>
+</header>
+
+<main>
+  <section>
+    <h2>Dashboard Content</h2>
+    <p>This sidebar is fully responsive.</p>
+  </section>
+</main>
+
+</div>
+</div>
+
+<script>
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('active');
+  document.getElementById('overlay').classList.toggle('active');
+}
+
+document.getElementById('overlay').onclick = function(){
+  toggleSidebar();
+}
+</script>
+
+</body>
+</html>

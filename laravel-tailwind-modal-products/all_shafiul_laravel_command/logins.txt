@@ -1,0 +1,59 @@
+
+Multi Auth
+
+https://chatgpt.com/c/69a532e1-0408-8322-9c58-3abc8093676f
+
+MultiAuth Login
+DashBoard - Admin - Vendor - SubAdmin
+Policies 
+Authorizations
+
+
+Login 
+
+Super Admin
+Email: superadmin@example.com
+Password: password123
+http://127.0.0.1:8000/admin/login
+
+Admin
+Email: admin@example.com
+Password: password123
+http://127.0.0.1:8000/admin/login
+
+Vendor
+http://127.0.0.1:8000/vendor/login
+vendor1@example.com
+password123
+Route::middleware(['auth:vendor','role:vendor'])->group(function(){
+    // vendor dashboard
+});
+
+Commands
+php artisan config:clear
+php artisan cache:clear
+
+php artisan make:migration add_slug_fields_to_products_table --table=products
+
+
+তুমি যেহেতু Laravel এ production-level project বানাও (Vue + API + Auth ইত্যাদি), তাই আমি এখানে complete architecture + code structure দিয়ে দিচ্ছি —
+Multi Auth + Role Permission System using:
+✅ Authentication (Multi Guard)
+✅ Spatie Permission
+✅ Policies
+✅ Authorization
+✅ Separate Login System
+✅ Admin Role/Permission Management Panel Structure
+✅ Super Admin / Admin / Vendor / Customer
+
+
+Roles:
+super_admin
+admin
+vendor
+customer
+
+Guards:
+web (customer)
+admin (super_admin + admin)
+vendor

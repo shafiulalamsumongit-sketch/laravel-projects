@@ -11,16 +11,6 @@ https://sites.google.com/view/bdixftpserverlist/media-ftp-servers
 
 php artisan make:migration add_slug_fields_to_products_table --table=products 
 
-'short_description',
- 'description',
-
-
-'slug',
-'seo_title',
-        'seo_description',
-        'weight',
-        'dimensions',
-        'publish_date',
 
 
 
