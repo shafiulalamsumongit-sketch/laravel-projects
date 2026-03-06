@@ -46,8 +46,10 @@ Route::post('login', [LoginController::class, 'login']);
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RolepermissionController;
 use App\Http\Controllers\Admin\UserController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -57,17 +59,34 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Protected routes for admin gaurd
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-        Route::resource('roles', RoleController::class);
-        Route::resource('users', UserController::class);
-        Route::get('/products', [ProductController::class, 'index'])->name('products-index');
-        Route::resource('admins', AdminController::class);
 
+        Route::get('/products', [ProductController::class, 'index'])->name('products-index');
         // direct restrictions - no guard - role -permission needed
         Route::middleware(['role:super_admin'])->group(function () {
-            // Route::resource('admins', AdminController::class);
+            Route::resource('admins', AdminController::class);
+  Route::resource('roles', RoleController::class);
+            Route::get('/roles/{role}/permissions',
+                    [RolepermissionController::class, 'edit'])
+                ->name('roles.permissions.edit');
+
+            Route::post('/roles/{role}/permissions',
+                    [RolepermissionController::class, 'update'])
+                ->name('roles.permissions.update');
+
+            /*
+             * Route::get('roles/permissions', [\App\Http\Controllers\Admin\RolepermissionController::class, 'permissionMatrix'])
+             *     ->name('roles.permissions');
+             *
+             * Route::post('roles/permissions', [\App\Http\Controllers\Admin\RolepermissionController::class, 'updatePermissions'])
+             *     ->name('roles.permissions.update');
+             */
+
+            Route::resource('permissions', PermissionController::class);
+         
+            Route::resource('users', UserController::class);
         });
     });
-});
+});  // Role Permission Matrix UI rolewise and model crude wise
 
 use App\Http\Controllers\Vendor\Auth\VendorLoginController;
 

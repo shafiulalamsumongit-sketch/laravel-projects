@@ -34,6 +34,12 @@
                                 @endforeach
                             </td>
                             <td class="px-6 py-4 text-right space-x-2">
+
+
+<a href="{{ route('admin.roles.permissions.edit', $role) }}"
+                                    class="text-blue-600 hover:text-blue-800 text-sm font-medium">Matrix</a>
+
+
                                 <a href="{{ route('admin.roles.edit', $role) }}"
                                     class="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</a>
 

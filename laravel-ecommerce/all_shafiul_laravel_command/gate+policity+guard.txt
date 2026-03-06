@@ -1,3 +1,7 @@
+Url : https://chatgpt.com/c/69a532e1-0408-8322-9c58-3abc8093676f
+
+
+
 Gate → General ability (no specific model)
 
 Policy → Permission on a specific model

@@ -4,7 +4,7 @@
             {{ __('Create Admin') }} Role : {{ auth('admin')->user()->getRoleNames()->first() }}
         </h2>
     </x-slot>
-    <div class="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-4">
+<div class="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-4">    
 
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">

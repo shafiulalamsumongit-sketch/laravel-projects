@@ -74,4 +74,31 @@ class RoleController extends Controller
         $role->delete();
         return back()->with('success', 'Role deleted successfully');
     }
+
+    public function permissionMatrix()
+    {
+        $roles = Role::where('guard_name', 'admin')->get();
+        $permissions = Permission::all();
+
+        return view('admin.roles.permission-matrix', compact('roles', 'permissions'));
+    }
+
+    public function updatePermissions(Request $request)
+    {
+        $request->validate([
+            'permissions' => 'required|array',
+            'permissions.*' => 'array'
+        ]);
+
+        foreach ($request->permissions as $roleName => $perms) {
+            $role = Role::where('name', $roleName)->first();
+            if ($role->name == 'super_admin')
+                continue;  // prevent editing super_admin
+            $role->syncPermissions($perms);
+        }
+
+        return back()->with('success', 'Permissions updated successfully');
+    }
+
+   
 }
