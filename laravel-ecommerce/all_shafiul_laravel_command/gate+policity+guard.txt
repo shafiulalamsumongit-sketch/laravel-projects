@@ -1,29 +1,32 @@
-Url : https://chatgpt.com/c/69a532e1-0408-8322-9c58-3abc8093676f
-
-
-
 Gate → General ability (no specific model)
+Gate : Create it in AuthService provider
+
 
 Policy → Permission on a specific model
 
-Policy - direct model and model object
+1️⃣  Policy - direct model and model object
+1️⃣  Source : https://chatgpt.com/c/69a532e1-0408-8322-9c58-3abc8093676f
+1️⃣  Controller use : $this->authorize('update', $user);
+1️⃣  Blade use : 
+   @can('update', $product)
+      <a href="{{ route('products.edit',$product) }}">Edit</a>
+   @endcan
 
-
-1️⃣ Model CRUD Authorization
-Example: UserPolicy
-public function update(Admin $admin, Admin $model)
-{
-    // Super admin can edit anyone
-    if ($admin->role == 'super_admin') {
-        return true;
-    }
-    // Admin cannot edit super admin
-    return $model->role !== 'super_admin';
-}
+️⃣ Model CRUD Authorization
+   Example: UserPolicy
+   public function update(Admin $admin, Admin $model)
+   {
+		// Super admin can edit anyone
+		if ($admin->role == 'super_admin') {
+			return true;
+		}
+		// Admin cannot edit super admin
+		return $model->role !== 'super_admin';
+	}
 
 1️⃣  Used in controller:
-$this->authorize('update', $user); // can update user 
-
+   $this->authorize('update', $user); // can update user 
+   
 📌 Use policy for:
 - edit user
 - delete user
@@ -33,35 +36,31 @@ $this->authorize('update', $user); // can update user
 - update category
 
 
-2️⃣ Protect Super Admin Records
+2️⃣  Protect Super Admin Records
 Example: Prevent editing super admin
-public function delete(Admin $admin, Admin $model)
-{
-    if ($model->role === 'super_admin') {
-        return false;
-    }
-    return $admin->role === 'super_admin';
-}
+	public function delete(Admin $admin, Admin $model)
+	{
+		if ($model->role === 'super_admin') {
+			return false;
+		}
+		return $admin->role === 'super_admin';
+	}
 Used when:
-deleting admin
-editing admin
-changing role
+	deleting admin
+	editing admin
+	changing role
 
 
 3️⃣ Ownership Based Access
-Example: Vendor can edit only their own products
-public function update(Vendor $vendor, Product $product)
-{
-    return $vendor->id === $product->vendor_id;
-}
+	Example: Vendor can edit only their own products
+	public function update(Vendor $vendor, Product $product)
+	{
+		return $vendor->id === $product->vendor_id;
+	}
 Used for:
 vendor product edit
 vendor order view
 vendor stock management
-
-
-
-
 
 4️⃣ Resource Viewing
 Example:
@@ -71,7 +70,6 @@ public function view(Admin $admin, Product $product)
 }
 Used in:
 $this->authorize('view', $product);
-
 
 6️⃣ Multi Guard Authorization
 Example for VendorPolicy
@@ -121,8 +119,6 @@ Route::delete('/users/{user}', function(User $user){
     $this->authorize('delete', $user);
 });
 
-
-
 🧠 Real Enterprise Architecture
 Use combination:
 Tool	Use Case
@@ -132,20 +128,6 @@ Gate	Access admin panel
 Policy	Update user
 Policy	Delete product
 Policy	Vendor ownership
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

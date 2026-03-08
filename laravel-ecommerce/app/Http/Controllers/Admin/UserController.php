@@ -24,7 +24,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', '%' . $request->search . '%');
         }
 
-        return $query->latest()->paginate(50);
+        return $query->latest()->paginate(1);
     }
 
     public function store(Request $request)

@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    public const HOME = '/dashboard';
+
+    public function boot(): void
+    {
+        $this->configureRateLimiting();
+
+        $this->routes(function () {
+
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
+        });
+    }
+
+    protected function configureRateLimiting(): void
+    {
+
+        // Normal API requests
+        RateLimiter::for('api', function (Request $request) {
+
+            return Limit::perMinute(100)->by(
+                $request->user()?->id ?: $request->ip()
+            );
+        });
+
+        // Login protection (Brute force)
+        RateLimiter::for('login', function (Request $request) {
+
+            return Limit::perMinute(5)->by($request->ip());
+        });
+
+        // File upload limiter
+        RateLimiter::for('uploads', function (Request $request) {
+
+            return Limit::perMinute(20)->by(
+                $request->user()?->id ?: $request->ip()
+            );
+        });
+
+        // OTP limiter
+        RateLimiter::for('otp', function (Request $request) {
+
+            return Limit::perMinute(3)->by($request->ip());
+        });
+
+    }
+}
+
+

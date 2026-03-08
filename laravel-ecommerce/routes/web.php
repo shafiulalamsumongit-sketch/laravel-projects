@@ -8,6 +8,17 @@ use App\Http\Controllers\TodoController;
 // use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\Auth\AdminLoginController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RolepermissionController;
+use App\Http\Controllers\Admin\UserController;
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,25 +43,22 @@ Route::get('/todos', [TodoController::class, 'index'])->name('todos.index');
 // Route::get('/users', [UserController::class, 'index'])->name('users-index');
 
 // Route::get('/products', [ProductController::class, 'index'])->name('products-index');
-
 Route::get('/categories', [CategoryController::class, 'index']);
-
 Route::get('/login-manual', [LoginController::class, 'show'])->name('login-manual');
 Route::post('/login-manual', [LoginController::class, 'login']);
 Route::post('/logout-manual', [LoginController::class, 'logout']);
 // manual login with sanctum
-Route::post('logout', [LoginController::class, 'logout'])
-    ->name('logout');
-Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('login', [LoginController::class, 'login'])->middleware('throttle:3,1');
+//Route::post('login', [LoginController::class, 'login'])->middleware('throttle:login');
 
-use App\Http\Controllers\Admin\Auth\AdminLoginController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\RolepermissionController;
-use App\Http\Controllers\Admin\UserController;
+
+Route::get('/users', [UserController::class, 'index'])->name('users-index');
+Route::get('/users/list', [UserController::class, 'list']);
+Route::post('/users/store', [UserController::class, 'store']);
+Route::get('/users/{id}/edit', [UserController::class, 'edit']);
+Route::post('/users/{id}/update', [UserController::class, 'update']);
+Route::delete('/users/{id}/delete', [UserController::class, 'destroy']);
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -59,30 +67,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Protected routes for admin gaurd
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-
         Route::get('/products', [ProductController::class, 'index'])->name('products-index');
         // direct restrictions - no guard - role -permission needed
         Route::middleware(['role:super_admin'])->group(function () {
             Route::resource('admins', AdminController::class);
-  Route::resource('roles', RoleController::class);
-            Route::get('/roles/{role}/permissions',
-                    [RolepermissionController::class, 'edit'])
-                ->name('roles.permissions.edit');
-
-            Route::post('/roles/{role}/permissions',
-                    [RolepermissionController::class, 'update'])
-                ->name('roles.permissions.update');
-
-            /*
-             * Route::get('roles/permissions', [\App\Http\Controllers\Admin\RolepermissionController::class, 'permissionMatrix'])
-             *     ->name('roles.permissions');
-             *
-             * Route::post('roles/permissions', [\App\Http\Controllers\Admin\RolepermissionController::class, 'updatePermissions'])
-             *     ->name('roles.permissions.update');
-             */
-
+            Route::resource('roles', RoleController::class);
+            Route::get('/roles/{role}/permissions', [RolepermissionController::class, 'edit'])->name('roles.permissions.edit');
+            Route::post('/roles/{role}/permissions', [RolepermissionController::class, 'update'])->name('roles.permissions.update');
             Route::resource('permissions', PermissionController::class);
-         
             Route::resource('users', UserController::class);
         });
     });
@@ -103,7 +95,6 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
         })->name('dashboard');
     });
 });
-
 // Route::middleware(['auth:vendor','role:vendor'])->group(function(){
 // });
 require __DIR__ . '/auth.php';

@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function index()
     {
        /// $this->authorize('viewAny', Admin::class);
-        $admins = Admin::with('roles')->latest()->paginate(20);
+        $admins = Admin::with('roles')->latest()->paginate(1);
         return view('admin.admins.index', compact('admins'));
     }
 

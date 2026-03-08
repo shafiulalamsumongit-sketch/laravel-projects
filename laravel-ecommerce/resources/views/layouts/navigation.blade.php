@@ -18,11 +18,13 @@
                 </div>
 
                 <!-- Users Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
-                        {{ __('Users') }}
-                    </x-nav-link>
-                </div>
+                @can('super-admin-access')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
 
                 <!-- Products Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -32,25 +34,34 @@
                 </div>
 
                 <!-- Admins Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.admins.index')" :active="request()->routeIs('admin.admins.index')">
-                        {{ __(key: 'Admin Users') }}
-                    </x-nav-link>
-                </div>
+
+                @can('super-admin-access')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.admins.index')" :active="request()->routeIs('admin.admins.index')">
+                            {{ __(key: 'Admin Users') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
 
                 <!-- Roles Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')">
-                        {{ __(key: 'Roles') }}
-                    </x-nav-link>
-                </div>
+                @can('super-admin-access')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')">
+                            {{ __(key: 'Roles') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+
 
                 <!-- Roles Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.index')">
-                        {{ __(key: 'Permissions') }}
-                    </x-nav-link>
-                </div>
+                @can('manage-permissions')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.index')">
+                            {{ __(key: 'Permissions') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+
 
 
             </div>
