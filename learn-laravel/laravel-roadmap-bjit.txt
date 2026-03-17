@@ -1,0 +1,71 @@
+Passport
+Guard
+Livewire
+Queues, caching, broadcasting (Laravel Echo, Reverb, or Pusher).
+
+
+- Familiarity with queues, caching, broadcasting (Laravel Echo, Reverb, or Pusher).
+
+
+## ✅ Required Skills & Experience
+- Proficiency in Inertia.js and React.js (React 18+ preferred).
+- Solid understanding of MySQL (query optimisation, relationships, indexing).
+- Hands-on experience with REST API development and integration.
+
+- Proficiency in Tailwind CSS for building responsive and modern interfaces.
+
+- Knowledge of authentication & authorisation (e.g., Sanctum, Passport, or JWT).
+
+- Solid experience with Git and team-based workflows (branching, pull requests, code reviews).
+- Familiarity with queues, caching, broadcasting (Laravel Echo, Reverb, or Pusher).
+
+AuthServiceProvider
+
+
+সাতক্ষীরার
+
+
+
+
+
+1) PHP basic knowledge (variable, string, functions, loop, array, etc.)
+
+2) jQuery – a javascript Library (effects, HTML, AJAX)
+
+3) Create a simple one-page CRUD application using PHP & jQuery
+
+4) Discussions on Laravel framework, installation, composer, git account, OOP basic
+
+5) Laravel folder structure, ARTISAN CLI, basic routing, Controller, Views, Middleware
+
+6) Database Migrations, Seeding, Factories and Tinkers
+
+7 & 8) Setup custom admin panel using ADMINLTE template (basic authentication)
+
+9 & 10) Dashboard, Category/subcategory Management; Category CRUD
+
+11 & 12) Product CRUD, product search & multiple image upload
+
+13) User Role and Permission Management, Localization settings (Bangla & English)
+
+14) React basic (Components, Class, Props, Events, Lists, Forms, Router etc. )
+
+15) React advance (Hooks, useState, useEffect, Sass Styling)
+
+16) Build API for products, categories, user information, etc., and test with POSTMAN
+
+17 & 18) Prepare the project homepage using React functional components
+
+19) Prepare product lists and about us page
+
+20) Prepare product details page
+
+21) Prepare checkout and cart page
+
+22) Payment gateway integration for order submit
+
+23) Order tracking management at backend
+
+24) Project deployment in cPanel server and general discussions.
+
+CV preparation, Interview Q/A, Grooming.

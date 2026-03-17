@@ -1,0 +1,123 @@
+One to One / Has One
+hasOne()
+belongsTo()
+class User extends Model
+{
+    public function phone(): HasOne{
+        return $this->hasOne(Phone::class);
+    }
+}
+$phone = User::find(1)->phone;
+return $this->hasOne(Phone::class, 'foreign_key');  //if not user_id in phone table
+return $this->hasOne(Phone::class, 'foreign_key', 'local_key');
+  
+Defining the Inverse of the Relationship
+class Phone extends Model
+{
+    public function user(): BelongsTo{
+        return $this->belongsTo(User::class);
+		 return $this->belongsTo(User::class, 'foreign_key');
+		 return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+    }
+}
+
+2. One to Many / Has Many ---------------------------------------------------------------------------------
+
+A blog post may have an infinite number of comments
+hasMany()
+class Post extends Model{
+    public function comments(): HasMany{
+        return $this->hasMany(Comment::class);
+    }
+}
+$comments = Post::find(1)->comments;
+foreach ($comments as $comment) {
+}
+$comment = Post::find(1)->comments()->where('title', 'foo')->first();
+
+
+
+
+#Automatically Hydrating Parent Models on Children
+class Post extends Model{
+    public function comments(): HasMany{
+        return $this->hasMany(Comment::class)->chaperone();
+    }
+}
+$posts = Post::with(['comments' => fn ($comments) => $comments->chaperone(),])->get();
+
+One to Many (Inverse) -> Belongs To
+class Comment extends Model{
+    public function post(): BelongsTo{
+        return $this->belongsTo(Post::class);
+		  return $this->belongsTo(Post::class, 'foreign_key');
+		   return $this->belongsTo(Post::class, 'foreign_key', 'owner_key');
+    }
+}
+$comment = Comment::find(1);
+return $comment->post->title;
+
+
+
+
+Default Models
+
+The belongsTo, hasOne, hasOneThrough, and morphOne relationships allow you to define a default model that will be returned if the given relationship is null
+
+/*** Get the author of the post.*/
+public function user(): BelongsTo{
+    return $this->belongsTo(User::class)->withDefault();
+}
+
+
+/*** Get the author of the post.*/
+public function user(): BelongsTo{
+    return $this->belongsTo(User::class)->withDefault([
+        'name' => 'Guest Author',
+    ]);
+}
+
+ 
+Querying Belongs To Relationships
+$posts = Post::where('user_id', $user->id)->get();
+$users = User::where('vip', true)->get();
+
+$posts = Post::whereBelongsTo($users)->get();
+
+$posts = Post::whereBelongsTo($user, 'author')->get();
+
+
+
+
+Has One of Many
+
+latestOfMany in laravel
+The latestOfMany method in Laravel's Eloquent ORM is used to retrieve the single latest record from a hasMany relationship, effectively turning it into a hasOne relationship for that specific latest record. This is particularly useful when you need to access the most recent related model without loading the entire collection of related models and then manually selecting the latest one.
+
+
+class User extends Model
+{
+    public function latestLogin(): HasOne
+    {
+        return $this->hasOne(Login::class)->latestOfMany();
+    }
+}
+
+
+$user = User::find(1);
+$latestLogin = $user->latestLogin; // This will return a single Login model or null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

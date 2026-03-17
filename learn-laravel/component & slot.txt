@@ -1,0 +1,91 @@
+https://chatgpt.com/c/686c1494-627c-800c-b0e4-1123c67f13c8
+
+
+Create a Component
+php artisan make:component Alert
+This creates two files:
+
+app/View/Components/Alert.php         ← Component class
+resources/views/components/alert.blade.php  ← Component view
+
+<x-package-alert/>
+
+This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
+<x-nightshade::calendar />
+<x-nightshade::color-picker />
+If the component class is nested deeper within the app/View/Components directory
+app/View/Components/Inputs/Button.php, we may render it like so:
+<x-inputs.button/>
+
+
+
+
+2. Define the Component View
+Edit the view: resources/views/components/alert.blade.php
+<div class="p-4 mb-4 text-sm text-{{ $type ?? 'blue' }}-700 bg-{{ $type ?? 'blue' }}-100 rounded-lg">
+    {{ $slot }}
+</div>
+
+
+You can now use this component in any Blade file:
+<x-alert type="red">
+    This is a danger alert!
+</x-alert>
+<x-alert type="green">
+    This is a success message!
+</x-alert>
+
+
+(Optional) Add Logic in the Class File
+
+Edit: app/View/Components/Alert.php
+
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+
+class Alert extends Component
+{
+    public $type;
+
+    public function __construct($type = 'blue')
+    {
+        $this->type = $type;
+    }
+
+    public function render()
+    {
+        return view('components.alert');
+    }
+}
+
+
+
+
+Index Components
+
+App\Views\Components\Card\Card
+
+App\Views\Components\Card\Header
+
+App\Views\Components\Card\Body
+
+
+PHP expressions and variables should be passed to the component via attributes that use the : character as a prefix:
+
+<x-alert type="error" :message="$message"/>
+
+
+
+
+ <x-alert alert-type="danger" >
+                    <x-slot name="title">Card Title inside</x-slot>
+                    <x-slot name="title2">Card Title2 inside</x-slot>
+                    This is the body of the card.
+                </x-alert> 
+Escaping Attribute Rendering
+
+
+Slots
+
+You will often need to pass additional content to your component via "slots". Component slots are rendered by echoing the $slot variable. 

@@ -1,0 +1,9 @@
+In Laravel, route model binding lets you automatically inject Eloquent models into your routes or controllers, instead of manually querying the database for them.
+
+There are two types:
+
+✅ Implicit binding
+✅ Explicit binding
+What is implicit binding?
+
+Implicit binding is where Laravel automatically resolves the model instance based on the route parameter, using its primary key.

@@ -41,17 +41,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/todos', [TodoController::class, 'index'])->name('todos.index');
 // Route::get('/users', [UserController::class, 'index'])->name('users-index');
-
 // Route::get('/products', [ProductController::class, 'index'])->name('products-index');
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/login-manual', [LoginController::class, 'show'])->name('login-manual');
 Route::post('/login-manual', [LoginController::class, 'login']);
 Route::post('/logout-manual', [LoginController::class, 'logout']);
+
 // manual login with sanctum
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-Route::post('login', [LoginController::class, 'login'])->middleware('throttle:3,1');
-//Route::post('login', [LoginController::class, 'login'])->middleware('throttle:login');
-
+Route::post('login', [LoginController::class, 'login'])->middleware('throttle:login-custom'); // custom login + app service provider
 
 Route::get('/users', [UserController::class, 'index'])->name('users-index');
 Route::get('/users/list', [UserController::class, 'list']);
@@ -67,7 +65,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Protected routes for admin gaurd
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-        Route::get('/products', [ProductController::class, 'index'])->name('products-index');
+        //Route::get('/products', [ProductController::class, 'index'])->name('products-index');
         // direct restrictions - no guard - role -permission needed
         Route::middleware(['role:super_admin'])->group(function () {
             Route::resource('admins', AdminController::class);

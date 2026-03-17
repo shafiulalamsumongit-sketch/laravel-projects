@@ -1,59 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VueMart — Laravel 11 Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel 11 REST API + Blade Admin Dashboard for the VueMart e-commerce platform.
 
-## About Laravel
+## Requirements
+- PHP 8.2+
+- Composer
+- MySQL 8+
+- Stripe account (for payments)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+# 1. Install PHP dependencies
+composer install
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# 2. Copy environment file
+cp .env.example .env
 
-## Learning Laravel
+# 3. Generate app key
+php artisan key:generate
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# 4. Configure .env — set DB credentials + Stripe keys
+DB_DATABASE=vuemart
+DB_USERNAME=root
+DB_PASSWORD=secret
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+STRIPE_KEY=pk_test_...
+STRIPE_SECRET=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
 
-## Laravel Sponsors
+FRONTEND_URL=http://localhost:5173
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# 5. Run migrations + seed
+php artisan migrate --seed
 
-### Premium Partners
+# 6. Start the server
+php artisan serve
+# API available at: http://localhost:8000
+# Admin dashboard at: http://localhost:8000/admin
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Default Credentials
+| Role     | Email                  | Password  |
+|----------|------------------------|-----------|
+| Admin    | admin@vuemart.com      | password  |
+| Customer | customer@vuemart.com   | password  |
 
-## Contributing
+## Project Structure
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+laravel-api/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Api/          # REST API controllers (Sanctum auth)
+│   │   │   │   ├── AuthController.php
+│   │   │   │   ├── ProductController.php
+│   │   │   │   ├── CategoryController.php
+│   │   │   │   ├── CartController.php
+│   │   │   │   ├── CheckoutController.php  (Stripe)
+│   │   │   │   ├── OrderController.php
+│   │   │   │   ├── ReviewController.php
+│   │   │   │   ├── WishlistController.php
+│   │   │   │   └── UserController.php
+│   │   │   └── Admin/        # Blade admin controllers
+│   │   │       ├── DashboardController.php
+│   │   │       ├── ProductController.php
+│   │   │       ├── CategoryController.php
+│   │   │       ├── OrderController.php
+│   │   │       ├── CustomerController.php
+│   │   │       └── ReviewController.php
+│   │   └── Middleware/
+│   │       └── AdminMiddleware.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Product.php
+│   │   ├── Category.php
+│   │   ├── Order.php
+│   │   ├── OrderItem.php
+│   │   ├── CartItem.php
+│   │   ├── Review.php
+│   │   └── Address.php
+│   ├── Policies/
+│   │   ├── CartItemPolicy.php
+│   │   └── OrderPolicy.php
+│   └── Providers/
+│       └── AppServiceProvider.php
+├── bootstrap/
+│   └── app.php               # Laravel 11 bootstrap (no kernel.php)
+├── config/
+│   ├── services.php           # Stripe config
+│   ├── cors.php               # CORS for Vue frontend
+│   └── sanctum.php
+├── database/
+│   ├── migrations/            # All table migrations
+│   └── seeders/
+│       └── DatabaseSeeder.php # Sample data
+├── resources/views/
+│   ├── layouts/
+│   │   └── admin.blade.php    # Admin layout
+│   └── admin/
+│       ├── auth/login.blade.php
+│       ├── dashboard/index.blade.php
+│       ├── products/{index,create,edit}.blade.php
+│       ├── orders/{index,show}.blade.php
+│       ├── categories/{index,create}.blade.php
+│       ├── customers/index.blade.php
+│       └── reviews/index.blade.php
+└── routes/
+    ├── api.php                # API routes
+    └── web.php                # Admin web routes
 
-## Code of Conduct
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## API Endpoints
 
-## Security Vulnerabilities
+### Public
+```
+POST /api/register
+POST /api/login
+GET  /api/products
+GET  /api/products/featured
+GET  /api/products/search?q=
+GET  /api/products/{slug}
+GET  /api/categories
+GET  /api/categories/{slug}/products
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Authenticated (Bearer token)
+```
+POST   /api/logout
+GET    /api/user
+PUT    /api/user
+GET    /api/cart
+POST   /api/cart
+PUT    /api/cart/{id}
+DELETE /api/cart/{id}
+GET    /api/orders
+GET    /api/orders/{id}
+POST   /api/checkout/intent
+POST   /api/checkout/complete
+GET    /api/wishlist
+POST   /api/wishlist/{product}
+```
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Stripe Webhook
+Configure your Stripe webhook to point to: `POST /api/stripe/webhook`
