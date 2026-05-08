@@ -1,3 +1,0 @@
-laravel work plan
-
-1. layout
